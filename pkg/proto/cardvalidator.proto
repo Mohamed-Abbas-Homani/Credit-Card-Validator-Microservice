@@ -1,0 +1,20 @@
+
+syntax = "proto3";
+
+package cardvalidator;
+
+option go_package = "credit-card-validator/pkg/proto";
+
+service CardValidator {
+  rpc ValidateCard(ValidateCardRequest) returns (ValidateCardResponse);
+}
+
+message ValidateCardRequest {
+  string card_number = 1;
+}
+
+message ValidateCardResponse {
+  bool valid = 1;
+  string card_type = 2;
+  string card_number = 3;
+}
