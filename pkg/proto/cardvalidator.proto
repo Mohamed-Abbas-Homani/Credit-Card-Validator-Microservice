@@ -1,4 +1,3 @@
-
 syntax = "proto3";
 
 package cardvalidator;
@@ -17,4 +16,24 @@ message ValidateCardResponse {
   bool valid = 1;
   string card_type = 2;
   string card_number = 3;
+  string scheme = 4;
+  string card_brand = 5;
+  string card_kind = 6;
+  Country country = 7;
+  Bank bank = 8;
+}
+
+message Country {
+  string name = 1;
+  string alpha2 = 2;
+  string currency = 3;
+  string emoji = 4;
+  int32 latitude = 5;
+  int32 longitude = 6;
+}
+
+message Bank {
+  string name = 1;
+  string url = 2;
+  string phone = 3;
 }

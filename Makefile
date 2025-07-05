@@ -1,37 +1,46 @@
-BIN_DIR := bin
-BINARY := server
+# Makefile
+
+# Output binary name and location
+BINARY_NAME=bin/server
+
+# Docker image name
+IMAGE_NAME=credit-card-validator
+
+# Proto definitions
 PROTO_DIR := pkg/proto
 PROTO_FILE := $(PROTO_DIR)/cardvalidator.proto
 PROTO_OUT := $(PROTO_DIR)/cardvalidator.pb.go
-WEB_DIR := web
 
-.PHONY: all build run test test-coverage test-e2e proto lint format docker-build docker-run clean
+# Default target: clean -> fmt -> proto -> test -> build
+.PHONY: all
+all: clean fmt proto test build
 
-all: build
+# Build the binary
+.PHONY: build
+build:
+	@echo "🔨 Building $(BINARY_NAME)..."
+	@mkdir -p bin
+	@go build -o $(BINARY_NAME) ./cmd/server
 
-build: proto
-	go build -o $(BIN_DIR)/$(BINARY) ./cmd/server
-
+# Run the app
+.PHONY: run
 run: build
-	./$(BIN_DIR)/$(BINARY)
+	@echo "🚀 Running $(BINARY_NAME)..."
+	@./$(BINARY_NAME)
 
+# Run unit tests
+.PHONY: test
 test:
-	go test -v ./tests/unit/...
+	@echo "✅ Running unit tests..."
+	@go test -v ./test/...
 
-test-coverage:
-	go test -coverprofile=coverage.out ./tests/unit/...
-	go tool cover -html=coverage.out -o coverage.html
-
-test-e2e:
-	go test -v ./tests/e2e/...
-
+# Generate Go code from proto file using script
+.PHONY: proto
 proto: $(PROTO_OUT)
 
 $(PROTO_OUT): $(PROTO_FILE)
-	./scripts/generate_proto.sh
-
-lint:
-	golangci-lint run ./...
+	@echo "📦 Generating protobuf files using generate_proto.sh..."
+	@./scripts/generate_proto.sh
 
 # Format code
 .PHONY: fmt
@@ -39,12 +48,26 @@ fmt:
 	@echo "🎨 Formatting code..."
 	@go fmt ./...
 
+# Lint code
+.PHONY: lint
+lint:
+	@echo "🔍 Linting code..."
+	@golangci-lint run ./...
+
+# Build Docker image
+.PHONY: docker-build
 docker-build:
-	docker build -t credit-card-validator -f deployments/Dockerfile .
+	@echo "🐳 Building Docker image..."
+	@docker build -t $(IMAGE_NAME) -f deployments/Dockerfile .
 
+# Run Docker container
+.PHONY: docker-run
 docker-run:
-	docker run -p 8080:8080 -p 9090:9090 credit-card-validator
+	@echo "🚀 Running Docker container on ports 8080 (HTTP) and 9090 (gRPC)..."
+	@docker run -p 8080:8080 -p 9090:9090 $(IMAGE_NAME)
 
+# Clean up binaries and generated files
+.PHONY: clean
 clean:
-	rm -rf $(BIN_DIR)
-	rm -f coverage.out coverage.html
+	@echo "🧹 Cleaning up..."
+	@rm -rf bin

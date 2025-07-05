@@ -1,381 +1,375 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💳 Credit Card Validator</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>💳 Credit Card Validator</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
 
-        .container {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            width: 100%;
-        }
+    .container {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      max-width: 550px;
+      width: 100%;
+    }
 
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
 
-        .header h1 {
-            color: #333;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
+    .header h1 {
+      color: #333;
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
 
-        .header p {
-            color: #666;
-            font-size: 1.1em;
-        }
+    .header p {
+      color: #666;
+      font-size: 1.1em;
+    }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+    .form-group {
+      margin-bottom: 20px;
+    }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: 600;
-        }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: 600;
+    }
 
-        input[type="text"] {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e1e5e9;
-            border-radius: 10px;
-            font-size: 1.1em;
-            transition: border-color 0.3s;
-        }
+    input[type="text"] {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #e1e5e9;
+      border-radius: 10px;
+      font-size: 1.1em;
+      transition: border-color 0.3s;
+    }
 
-        input[type="text"]:focus {
-            outline: none;
-            border-color: #667eea;
-        }
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #667eea;
+    }
 
-        .btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
+    .btn {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
-        }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+    }
 
-        .btn:active {
-            transform: translateY(0);
-        }
+    .btn:active {
+      transform: translateY(0);
+    }
 
-        .result {
-            margin-top: 30px;
-            padding: 20px;
-            border-radius: 10px;
-            display: none;
-        }
+    .result {
+      margin-top: 30px;
+      padding: 20px;
+      border-radius: 10px;
+      display: none;
+    }
 
-        .result.valid {
-            background: #d4edda;
-            border: 1px solid #c3e6cb;
-            color: #155724;
-        }
+    .result.valid {
+      background: #d4edda;
+      border: 1px solid #c3e6cb;
+      color: #155724;
+    }
 
-        .result.invalid {
-            background: #f8d7da;
-            border: 1px solid #f5c6cb;
-            color: #721c24;
-        }
+    .result.invalid {
+      background: #f8d7da;
+      border: 1px solid #f5c6cb;
+      color: #721c24;
+    }
 
-        .result-icon {
-            font-size: 2em;
-            margin-bottom: 10px;
-        }
+    .result-icon {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
 
-        .result-text {
-            font-size: 1.2em;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
+    .result-text {
+      font-size: 1.2em;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
 
-        .card-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 15px;
-        }
+    .card-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 15px;
+    }
 
-        .card-type {
-            background: #f8f9fa;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+    .card-type {
+      background: #f8f9fa;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
 
-        .loading {
-            opacity: 0.6;
-            pointer-events: none;
-        }
+    .loading {
+      opacity: 0.6;
+      pointer-events: none;
+    }
 
-        .examples {
-            margin-top: 30px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
-        }
+    .examples {
+      margin-top: 30px;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 10px;
+    }
 
-        .examples h3 {
-            color: #333;
-            margin-bottom: 15px;
-        }
+    .examples h3 {
+      color: #333;
+      margin-bottom: 15px;
+    }
 
-        .examples ul {
-            list-style: none;
-        }
+    .examples ul {
+      list-style: none;
+    }
 
-        .examples li {
-            padding: 5px 0;
-            color: #666;
-        }
+    .examples li {
+      padding: 5px 0;
+      color: #666;
+    }
 
-        .examples li strong {
-            color: #333;
-        }
+    .examples li strong {
+      color: #333;
+    }
 
-        .card-visual {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-            font-family: 'Courier New', monospace;
-            position: relative;
-            overflow: hidden;
-        }
+    .card-visual {
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 15px;
+      margin: 20px 0;
+      font-family: 'Courier New', monospace;
+      position: relative;
+      overflow: hidden;
+    }
 
-        .card-visual::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-        }
+    .card-visual::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    }
 
-        .card-number {
-            font-size: 1.5em;
-            letter-spacing: 3px;
-            margin-bottom: 15px;
-        }
+    .card-number {
+      font-size: 1.5em;
+      letter-spacing: 3px;
+      margin-bottom: 15px;
+    }
 
-        .card-details {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    .card-details {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        .error-message {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 10px;
-            display: none;
-        }
-    </style>
+    .error-message {
+      background: #f8d7da;
+      color: #721c24;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 10px;
+      display: none;
+    }
+
+    #extraInfo p {
+      margin: 6px 0;
+      font-size: 0.95em;
+      color: #333;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>💳 Credit Card Validator</h1>
-            <p>Validate credit card numbers using the Luhn algorithm</p>
-        </div>
-
-        <form id="validationForm">
-            <div class="form-group">
-                <label for="cardNumber">Card Number</label>
-                <input type="text" id="cardNumber" placeholder="Enter credit card number" maxlength="19">
-            </div>
-            <button type="submit" class="btn">Validate Card</button>
-        </form>
-
-        <div class="error-message" id="errorMessage"></div>
-
-        <div class="result" id="result">
-            <div class="result-icon" id="resultIcon"></div>
-            <div class="result-text" id="resultText"></div>
-            <div class="card-info">
-                <div class="card-type" id="cardType"></div>
-                <div id="cardNumber"></div>
-            </div>
-        </div>
-
-        <div class="card-visual" id="cardVisual" style="display: none;">
-            <div class="card-number" id="visualCardNumber">**** **** **** ****</div>
-            <div class="card-details">
-                <div id="visualCardType">CARD TYPE</div>
-                <div>VALID</div>
-            </div>
-        </div>
-
-        <div class="examples">
-            <h3>Test Card Numbers</h3>
-            <ul>
-                <li><strong>Visa:</strong> 4532015112830366</li>
-                <li><strong>Mastercard:</strong> 5555555555554444</li>
-                <li><strong>American Express:</strong> 371449635398431</li>
-                <li><strong>Discover:</strong> 6011111111111117</li>
-            </ul>
-        </div>
+  <div class="container">
+    <div class="header">
+      <h1>💳 Credit Card Validator</h1>
+      <p>Validate credit card numbers using the Luhn algorithm</p>
     </div>
 
-    <script>
-        const form = document.getElementById('validationForm');
-        const cardNumberInput = document.getElementById('cardNumber');
-        const result = document.getElementById('result');
-        const resultIcon = document.getElementById('resultIcon');
-        const resultText = document.getElementById('resultText');
-        const cardType = document.getElementById('cardType');
-        const cardVisual = document.getElementById('cardVisual');
-        const visualCardNumber = document.getElementById('visualCardNumber');
-        const visualCardType = document.getElementById('visualCardType');
-        const errorMessage = document.getElementById('errorMessage');
+    <form id="validationForm">
+      <div class="form-group">
+        <label for="cardNumber">Card Number</label>
+        <input type="text" id="cardNumber" placeholder="Enter credit card number" maxlength="19">
+      </div>
+      <button type="submit" class="btn">Validate Card</button>
+    </form>
 
-        // Format card number input
-        cardNumberInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-            let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
-            if (formattedValue.length > 19) {
-                formattedValue = formattedValue.substr(0, 19);
-            }
-            e.target.value = formattedValue;
-            
-            // Update visual card
-            if (value.length > 0) {
-                updateVisualCard(value);
-            } else {
-                cardVisual.style.display = 'none';
-            }
+    <div class="error-message" id="errorMessage"></div>
+
+    <div class="result" id="result">
+      <div class="result-icon" id="resultIcon"></div>
+      <div class="result-text" id="resultText"></div>
+      <div class="card-info">
+        <div class="card-type" id="cardType"></div>
+        <div id="displayCardNumber"></div>
+      </div>
+      <div id="extraInfo" style="margin-top: 20px;">
+        <p><strong>Scheme:</strong> <span id="scheme"></span></p>
+        <p><strong>Brand:</strong> <span id="brand"></span></p>
+        <p><strong>Type:</strong> <span id="kind"></span></p>
+        <p><strong>Country:</strong> <span id="country"></span> <span id="flag" style="font-size: 1.2em;"></span></p>
+        <p><strong>Bank:</strong> <span id="bank"></span></p>
+      </div>
+    </div>
+
+    <div class="card-visual" id="cardVisual" style="display: none;">
+      <div class="card-number" id="visualCardNumber">**** **** **** ****</div>
+      <div class="card-details">
+        <div id="visualCardType">CARD TYPE</div>
+        <div>VALID</div>
+      </div>
+    </div>
+
+    <div class="examples">
+      <h3>Test Card Numbers</h3>
+      <ul>
+        <li><strong>Visa:</strong> 4532015112830366</li>
+        <li><strong>Mastercard:</strong> 5555555555554444</li>
+        <li><strong>American Express:</strong> 371449635398431</li>
+        <li><strong>Discover:</strong> 6011111111111117</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('validationForm');
+    const cardNumberInput = document.getElementById('cardNumber');
+    const result = document.getElementById('result');
+    const resultIcon = document.getElementById('resultIcon');
+    const resultText = document.getElementById('resultText');
+    const cardType = document.getElementById('cardType');
+    const visualCardNumber = document.getElementById('visualCardNumber');
+    const visualCardType = document.getElementById('visualCardType');
+    const cardVisual = document.getElementById('cardVisual');
+    const errorMessage = document.getElementById('errorMessage');
+
+    cardNumberInput.addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/g, '');
+      let formatted = value.match(/.{1,4}/g)?.join(' ') || value;
+      e.target.value = formatted.slice(0, 19);
+
+      if (value.length > 0) {
+        updateVisualCard(value);
+      } else {
+        cardVisual.style.display = 'none';
+      }
+    });
+
+    function updateVisualCard(cardNumber) {
+      const masked = cardNumber.replace(/\d(?=\d{4})/g, '*').replace(/(.{4})/g, '$1 ').trim();
+      visualCardNumber.textContent = masked || '**** **** **** ****';
+      visualCardType.textContent = detectCardType(cardNumber).toUpperCase();
+      cardVisual.style.display = 'block';
+    }
+
+    function detectCardType(cardNumber) {
+      if (cardNumber.startsWith('4')) return 'visa';
+      if (cardNumber.startsWith('5') || (parseInt(cardNumber.slice(0, 4)) >= 2221 && parseInt(cardNumber.slice(0, 4)) <= 2720)) return 'mastercard';
+      if (cardNumber.startsWith('34') || cardNumber.startsWith('37')) return 'amex';
+      if (cardNumber.startsWith('6')) return 'discover';
+      return 'unknown';
+    }
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const raw = cardNumberInput.value.replace(/\s+/g, '');
+      if (!raw) return showError('Please enter a card number');
+
+      hideError();
+      showLoading(true);
+
+      try {
+        const res = await fetch('/api/v1/validate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ card_number: raw })
         });
 
-        function updateVisualCard(cardNumber) {
-            const formatted = cardNumber.replace(/(.{4})/g, '$1 ').trim();
-            const masked = formatted.replace(/\d(?=\d{4})/g, '*');
-            visualCardNumber.textContent = masked || '**** **** **** ****';
-            
-            // Detect card type for visual
-            const type = detectCardType(cardNumber);
-            visualCardType.textContent = type.toUpperCase();
-            
-            cardVisual.style.display = 'block';
-        }
+        const data = await res.json();
+        res.ok ? showResult(data) : showError(data.error || 'Validation failed');
+      } catch {
+        showError('Network error. Please try again.');
+      } finally {
+        showLoading(false);
+      }
+    });
 
-        function detectCardType(cardNumber) {
-            if (cardNumber.startsWith('4')) return 'visa';
-            if (cardNumber.startsWith('5') || (cardNumber.length >= 4 && parseInt(cardNumber.substr(0, 4)) >= 2221 && parseInt(cardNumber.substr(0, 4)) <= 2720)) return 'mastercard';
-            if (cardNumber.startsWith('34') || cardNumber.startsWith('37')) return 'amex';
-            if (cardNumber.startsWith('6')) return 'discover';
-            return 'unknown';
-        }
+    function showResult(data) {
+      result.style.display = 'block';
+      result.className = `result ${data.valid ? 'valid' : 'invalid'}`;
+      resultIcon.textContent = data.valid ? '✅' : '❌';
+      resultText.textContent = data.valid ? 'Valid Credit Card' : 'Invalid Credit Card';
+      cardType.textContent = data.card_type?.toUpperCase() || 'UNKNOWN';
+      document.getElementById('displayCardNumber').textContent = maskCard(data.card_number);
 
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const cardNumber = cardNumberInput.value.replace(/\s+/g, '');
-            
-            if (!cardNumber) {
-                showError('Please enter a card number');
-                return;
-            }
+      document.getElementById('scheme').textContent = data.scheme || 'N/A';
+      document.getElementById('brand').textContent = data.card_brand || 'N/A';
+      document.getElementById('kind').textContent = data.card_kind || 'N/A';
+      document.getElementById('country').textContent = data.country?.name || 'Unknown';
+      document.getElementById('flag').textContent = data.country?.emoji || '';
+      document.getElementById('bank').textContent =
+        [data.bank?.name, data.bank?.url, data.bank?.phone].filter(Boolean).join(' | ') || 'N/A';
 
-            hideError();
-            showLoading(true);
-            
-            try {
-                const response = await fetch('/api/v1/validate', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        card_number: cardNumber
-                    })
-                });
+      if (data.valid) updateVisualCard(data.card_number);
+    }
 
-                const data = await response.json();
-                
-                if (response.ok) {
-                    showResult(data);
-                } else {
-                    showError(data.error || 'Validation failed');
-                }
-            } catch (error) {
-                showError('Network error. Please try again.');
-            } finally {
-                showLoading(false);
-            }
-        });
+    function maskCard(num) {
+      return num.replace(/\d(?=\d{4})/g, '*').replace(/(.{4})/g, '$1 ').trim();
+    }
 
-        function showResult(data) {
-            result.style.display = 'block';
-            result.className = `result ${data.valid ? 'valid' : 'invalid'}`;
-            
-            resultIcon.textContent = data.valid ? '✅' : '❌';
-            resultText.textContent = data.valid ? 'Valid Credit Card' : 'Invalid Credit Card';
-            cardType.textContent = data.card_type.toUpperCase();
-            
-            // Update visual card
-            if (data.valid) {
-                updateVisualCard(data.card_number);
-            }
-        }
+    function showError(msg) {
+      errorMessage.textContent = msg;
+      errorMessage.style.display = 'block';
+      result.style.display = 'none';
+    }
 
-        function showError(message) {
-            errorMessage.textContent = message;
-            errorMessage.style.display = 'block';
-            result.style.display = 'none';
-        }
+    function hideError() {
+      errorMessage.style.display = 'none';
+    }
 
-        function hideError() {
-            errorMessage.style.display = 'none';
-        }
-
-        function showLoading(loading) {
-            if (loading) {
-                form.classList.add('loading');
-            } else {
-                form.classList.remove('loading');
-            }
-        }
-    </script>
+    function showLoading(state) {
+      form.classList.toggle('loading', state);
+    }
+  </script>
 </body>
 </html>
