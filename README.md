@@ -88,7 +88,7 @@ POST /api/v1/validate
 Content-Type: application/json
 
 {
-  "card_number": "4532015112830366"
+  "card_number": "4111111111111111"
 }
 ```
 
@@ -97,7 +97,25 @@ Content-Type: application/json
 {
   "valid": true,
   "card_type": "visa",
-  "card_number": "4532015112830366"
+  "card_number": "4111111111111111",
+  "scheme": "visa",
+  "card_brand": "Visa Classic",
+  "card_kind": "",
+  "country": {
+    "name": "Poland",
+    "alpha2": "PL",
+    "currency": "PLN",
+    "emoji": "🇵🇱",
+    "latitude": 52,
+    "longitude": 20
+  },
+  "bank": {
+    "name": "Conotoxia Sp. Z O.O",
+    "url": "",
+    "phone": ""
+  },
+  "bin": "411111",
+  "last_four": "1111"
 }
 ```
 
@@ -166,6 +184,7 @@ make run           # Run the application
 make test          # Run unit tests
 make proto         # Generate protobuf files
 make lint          # Run linter
+make test          # Run tests
 make format        # Format code
 make docker-build  # Build Docker image
 make docker-run    # Run Docker container
