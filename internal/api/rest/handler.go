@@ -45,6 +45,24 @@ func (h *Handler) ValidateCard(c echo.Context) error {
 		})
 	}
 
-	result := h.validator.ValidateCard(req.CardNumber)
+	result, err := h.validator.ValidateCard(c.Request().Context(), req.CardNumber)
+	if err != nil {
+		h.logger.WithError(err).Error("Validation failed")
+
+		var status int
+		switch err {
+		case service.ErrInvalidCardNumber, service.ErrCardNumberTooShort:
+			status = http.StatusBadRequest
+		case service.ErrBINLookupFailed, service.ErrInvalidBINResponse:
+			status = http.StatusServiceUnavailable
+		default:
+			status = http.StatusInternalServerError
+		}
+
+		return c.JSON(status, map[string]string{
+			"error": err.Error(),
+		})
+	}
+
 	return c.JSON(http.StatusOK, result)
 }

@@ -133,14 +133,7 @@ Visit `http://localhost:8080` to access the web interface for testing.
 # Run unit tests
 make test
 
-# Run unit tests with coverage
-make test-coverage
 
-# Run E2E tests
-make test-e2e
-
-# Run all tests
-make test-all
 ```
 
 ## 📊 Monitoring
@@ -171,8 +164,6 @@ make help          # Show available commands
 make build         # Build the application
 make run           # Run the application
 make test          # Run unit tests
-make test-coverage # Run tests with coverage
-make test-e2e      # Run E2E tests
 make proto         # Generate protobuf files
 make lint          # Run linter
 make format        # Format code
@@ -193,7 +184,7 @@ credit-card-validator/
 │   └── middleware/     # HTTP middleware
 ├── pkg/proto/          # Protocol buffer definitions
 ├── web/                # Web interface
-├── tests/              # Test files
+├── test/              # Test files
 └── deployments/        # Deployment files
 ```
 
@@ -210,7 +201,7 @@ credit-card-validator/
 2. Create a feature branch
 3. Make your changes
 4. Add tests
-5. Run `make test-all`
+5. Run `make test`
 6. Submit a pull request
 
 ## 📝 License

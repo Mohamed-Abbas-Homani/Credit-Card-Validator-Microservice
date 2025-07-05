@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
 	"net"
 	"os"
 	"os/signal"
@@ -21,6 +22,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/sirupsen/logrus"
 	grpcserver "google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 func main() {
@@ -36,7 +38,10 @@ func main() {
 	logger.SetLevel(level)
 
 	// Create validator service
-	validatorService := service.NewValidator(logger)
+	validatorService, err := service.NewValidator(&cfg.Validator, logger)
+	if err != nil {
+		log.Fatalf("%s", err.Error())
+	}
 
 	// Setup Echo server
 	e := echo.New()
@@ -73,6 +78,7 @@ func main() {
 	grpcServer := grpcserver.NewServer()
 	grpcHandler := grpc.NewServer(validatorService, logger)
 	grpcHandler.RegisterServer(grpcServer)
+	reflection.Register(grpcServer)
 
 	// Start servers
 	var wg sync.WaitGroup
