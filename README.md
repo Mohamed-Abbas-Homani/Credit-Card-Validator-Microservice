@@ -12,7 +12,7 @@ A high-performance microservice for validating credit card numbers using the Luh
 - **Prometheus Metrics** for monitoring
 - **Structured Logging** with Logrus
 - **Configuration Management** with Viper
-- **Comprehensive Testing** (Unit + E2E)
+- **Comprehensive Testing**
 - **Docker Support** for containerization
 
 ## 🏗️ Architecture
