@@ -167,10 +167,30 @@ The service exposes Prometheus metrics at `/metrics`:
 Configuration can be set via environment variables or config file:
 
 ```env
+# Server port for the Echo HTTP server
 PORT=8080
+
+# Port for the gRPC server
 GRPC_PORT=9090
+
+# Log level: options include debug, info, warn, error
 LOG_LEVEL=info
+
+# Enable Prometheus metrics endpoint (/metrics)
 METRICS_ENABLED=true
+
+# Enable BIN (Bank Identification Number) lookup
+ENABLE_BIN_LOOKUP=true
+
+# Timeout for BIN HTTP requests (e.g., 5s, 10s, 30s)
+HTTP_TIMEOUT=10s
+
+# External BIN lookup service URL
+BIN_SERVICE_URL=https://lookup.binlist.net
+
+# Mask sensitive card data in logs
+MASK_SENSITIVE=true
+
 ```
 
 ## 🔧 Development
