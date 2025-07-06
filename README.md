@@ -36,6 +36,25 @@ A high-performance microservice for validating credit card numbers using the Luh
 │    └───────────────────────┘          │
 └────────────────────────────────────────┘
 ```
+## 📸 Screenshots
+
+### 🖥️ Web Interface
+
+![Web Interface](screenshots/web.png)
+
+---
+
+### 📡 gRPC Testing (e.g., with `grpcurl` or Postman)
+
+![gRPC API](screenshots/grpc.png)
+
+---
+
+### 🌐 Echo Server – REST API in Browser
+
+![Echo Server](screenshots/rest.png)
+
+---
 
 ## 🛠️ Quick Start
 
